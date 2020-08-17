@@ -1,5 +1,8 @@
-interface spiderman{
+interface superHeroe{
     nombre: string,
     poderes: string[]
 }
-let peter = { nombre: "Peter Parker", poderes: ["Trepar","Fuerza", "Agilidad","Telas de araña"]};
+let spiderman:superHeroe = { 
+    nombre: "Peter Parker", 
+    poderes: ["Trepar","Fuerza", "Agilidad","Telas de araña"]
+};
