@@ -1,0 +1,30 @@
+<div class="header">
+    <h1>Descuentos salariales</h1>
+    <p>Ingrese su salario</p>
+</div>
+
+<label>Ingrese salario:</label>
+<input type="number" [(ngModel)]="sueldo">
+<label id="error" [hidden]="valid==1">Por favor ingrese un salario mayor a 0</label>
+<br>
+<button class="button" (click)="calcular()">Calcular descuentos</button>
+<br>
+<table [hidden]="contador==0">
+    <thead>
+        <tr>
+            <th>Sueldo final</th>
+            <th>Descuentos isss</th>
+            <th>Descuentos afp</th>
+            <th>Descuentos renta</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let salario of registro">
+            <td>{{salario.sueldo}}</td>
+            <td>{{salario.isss}}</td>
+            <td>{{salario.afp}}</td>
+            <td>{{salario.renta}}</td>
+        </tr>
+    </tbody>
+</table>
