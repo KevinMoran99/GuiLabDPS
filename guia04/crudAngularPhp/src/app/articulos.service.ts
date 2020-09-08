@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ArticulosService {
 
-  url='http://localhost/guia4_serverfiles/';
+  url='https://rinkuzero.000webhostapp.com/';
 
   constructor(private http: HttpClient) { }
 
