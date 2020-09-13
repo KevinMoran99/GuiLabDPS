@@ -1,0 +1,2 @@
+Ejemplo (CRUD de productos): https://crudangularfirebase-fa829.web.app/
+Discusión de resultados (Ejercicio 1 de Guia 4): https://crudangularguia4.web.app/
