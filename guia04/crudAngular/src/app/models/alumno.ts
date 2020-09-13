@@ -1,5 +1,5 @@
 export class Alumno {
-    id: number = 0;
+    $key: string = null;
     name: string ='';
     lastname:string = '';
     age: number = 0;

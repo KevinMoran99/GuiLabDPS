@@ -1,22 +1,80 @@
-import { Component } from '@angular/core';
-import { Alumno } from './models/alumno'
+import { Component, OnInit } from '@angular/core';
+import { Alumno } from './models/alumno';
+import { AlumnoService } from './services/alumno.service';
+import { NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'CrudAngular';
 
-  alumnoArray: Alumno[] = [
-    {id:1, name: "Alex", lastname:"Campos",age:33, address: "Su casita", phone:"7777-7777",email:"Correo@gmail.com"},
-    {id:2, name: "Maria", lastname:"Lopez",age:20,address: "Su casita2", phone:"7878-7878",email:"Correo@gmail.com"},
-    {id:3, name: "Juan", lastname:"Castro",age:25,address: "Su casita3", phone:"7676-7676",email:"Correo@gmail.com"}
-  ]
+  alumnoArray: Alumno[];
 
-  selectedAlumno: Alumno = {id:0, name:'',lastname:'',age:0, address:'', phone: '', email: ''};
+  constructor(public alumnoService: AlumnoService) {}
 
-  openForEdit(alumno: Alumno): void{
+  ngOnInit() {
+    this.resetForm();
+    return this.alumnoService.getAlumnos().snapshotChanges().subscribe(item => {
+      this.alumnoArray = [];
+      item.forEach(element => {
+        let x = element.payload.toJSON();
+        x["$key"] = element.key;
+        this.alumnoArray.push(x as Alumno);
+      });
+    });
+  }
+
+  onSubmit(alumnoForm: NgForm) {
+    if (alumnoForm.value.$key == null) {
+      this.alumnoService.insertAlumno(alumnoForm.value);
+    }
+    else {
+      this.alumnoService.updateAlumno(alumnoForm.value);
+    }
+
+    Swal.fire('Operación Exitosa', 'Información Enviada', 'success');
+    this.resetForm(alumnoForm);
+  }
+
+  onEdit(alumno: Alumno) {
+    this.alumnoService.selectedAlumno = Object.assign({}, alumno);
+  }
+
+  onDelete($key: string) {
+    Swal.fire({
+      title: '¿Desea eliminar este registro?',
+      text: 'No podrá recuperar este registro',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.alumnoService.deleteAlumno($key);
+        this.resetForm();
+        Swal.fire(
+          'Operación Exitosa',
+          'Registro Eliminado',
+          'success'
+        );
+      } 
+    });
+  }
+
+  resetForm(alumnoForm?: NgForm) {
+    if (alumnoForm != null) {
+      alumnoForm.reset();
+    }
+    this.alumnoService.selectedAlumno = new Alumno();
+  }
+
+  //selectedAlumno: Alumno = {id:0, name:'',lastname:'',age:0, address:'', phone: '', email: ''};
+
+  /*openForEdit(alumno: Alumno): void{
     this.selectedAlumno = alumno;
   }
 
@@ -33,6 +91,6 @@ export class AppComponent {
       this.alumnoArray = this.alumnoArray.filter(x=> x != this.selectedAlumno);
       this.selectedAlumno = {id:0, name:'',lastname:'',age:0, address:'', phone: '', email: ''};
     }
-  }
+  }*/
 
 }

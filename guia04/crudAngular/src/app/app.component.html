@@ -16,8 +16,8 @@
       <!-- mt-4 espacio en blanco vertical -->
         <ul class="list-group">
 
-          <li *ngFor="let alumno of alumnoArray" class="list-group-item list-group-item-action" (click)="openForEdit(alumno)" [class.active]="alumno == selectedAlumno">
-            <span class="badge badge-primary">{{alumno.id}}</span>
+          <li *ngFor="let alumno of alumnoArray" class="list-group-item list-group-item-action" (click)="onEdit(alumno)" [class.active]="alumno.$key == alumnoService.selectedAlumno.$key">
+            <span class="badge badge-primary">{{alumno.$key}}</span>
             - {{alumno.name}}
             - {{alumno.lastname}}
             - {{alumno.age}}
@@ -28,33 +28,36 @@
         </ul>
         <div class="card">
           <div class="card-body">
-            <form #aluform="ngForm">  
+            <form #alumnoForm="ngForm">  
             <div class="card-title">
-              <h3>{{selectedAlumno.id == 0 ? "Agregar Nuevo Alumno" : "Actualizar Alumno"}}</h3>
+              <h3>{{alumnoService.selectedAlumno.$key == null ? "Agregar Nuevo Alumno" : "Actualizar Alumno"}}</h3>
             </div>
-            
+            <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="alumnoService.selectedAlumno.$key">
             <div class="form-group">
-              <input type="text" [(ngModel)]="selectedAlumno.name" placeholder="Nombre" class="form-control" name="name" required>
-            </div>
-            <div class="form-group">
-              <input type="text" [(ngModel)]="selectedAlumno.lastname" placeholder="Apellido" class="form-control" name="lastname" required>
+              <input type="text" [(ngModel)]="alumnoService.selectedAlumno.name" placeholder="Nombre" class="form-control" name="name" #name="ngModel" required>
             </div>
             <div class="form-group">
-              <input type="number" [(ngModel)]="selectedAlumno.age" placeholder="Edad" class="form-control" name="age" required>
+              <input type="text" [(ngModel)]="alumnoService.selectedAlumno.lastname" placeholder="Apellido" class="form-control" name="lastname" #lastname="ngModel" required>
             </div>
             <div class="form-group">
-              <input type="text" [(ngModel)]="selectedAlumno.address" placeholder="Direccion" class="form-control" name="address" required>
+              <input type="number" [(ngModel)]="alumnoService.selectedAlumno.age" placeholder="Edad" class="form-control" name="age" #age="ngModel" required>
             </div>
             <div class="form-group">
-              <input type="text" [(ngModel)]="selectedAlumno.phone" placeholder="Telefono" name="phone" pattern="^[267]{1}[0-9]{3}-{1}[0-9]{4}$" class="form-control" required>
+              <input type="text" [(ngModel)]="alumnoService.selectedAlumno.address" placeholder="Direccion" class="form-control" name="address" #address="ngModel" required>
             </div>
             <div class="form-group">
-              <input type="email" [(ngModel)]="selectedAlumno.email" placeholder="Correo" class="form-control" name="email" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" required>
+              <input type="text" [(ngModel)]="alumnoService.selectedAlumno.phone" placeholder="Telefono" name="phone" #phone="ngModel" pattern="^[267]{1}[0-9]{3}-{1}[0-9]{4}$" class="form-control" required>
             </div>
-            <button (click)="addOrEdit()" class="btn btn-primary btn-space" [disabled]="!aluform.form.valid">
+            <div class="form-group">
+              <input type="email" [(ngModel)]="alumnoService.selectedAlumno.email" placeholder="Correo" class="form-control" name="email" #email="ngModel" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-space" [disabled]="!alumnoForm.form.valid" (click)="onSubmit(alumnoForm)">
               Guardar
             </button>
-            <button *ngIf="selectedAlumno.id !== 0" class="btn btn-danger" (click)="delete()" [disabled]="!aluform.form.valid">
+            <button class="btn btn-secondary" type="reset" (click)="resetForm(alumnoForm)">
+              <i class="fas fa-sync-alt"></i> Reset
+            </button>
+            <button *ngIf="alumnoService.selectedAlumno.$key != null" class="btn btn-danger float-right" (click)="onDelete(alumnoService.selectedAlumno.$key)" [disabled]="!alumnoForm.form.valid">
               Eliminar
             </button>
           </form>
