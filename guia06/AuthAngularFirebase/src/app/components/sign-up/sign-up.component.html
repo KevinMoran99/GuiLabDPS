@@ -1,0 +1,64 @@
+<div class="container py-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+
+          <div class="card rounded-0">
+            <div class="card-header">
+              <h3 class="mb-0">Sign Up</h3>
+            </div>
+            <div class="displayTable">
+              <div class="displayTableCell p-5 text-center">
+
+                <div class="authBlock">
+
+                  <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Email Address" #userEmail required>
+                  </div>
+
+                  <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" #userPwd required>
+                  </div>
+
+                  <div class="form-group">
+                    <input type="button" class="btn btn-primary" value="Sign Up"
+                      (click)="authService.SignUp(userEmail.value, userPwd.value)">
+                  </div>
+
+                  <div class="form-group">
+                    <span class="or"><span class="orInner">Or</span></span>
+                  </div>
+
+                  <!-- Continue with Google -->
+                  <div class="form-group">
+                    <button type="button" class="btn btn-success" (click)="authService.GoogleAuth()">
+                      <i class="fab fa-google-plus-g"></i>
+                      Continue with Google
+                    </button>
+                  </div>
+
+                  <!-- Continue with Facebook -->
+                  <div class="form-group">
+                    <button type="button" class="btn btn-info" (click)="authService.FacebookAuth()">
+                      <i class="fab fa-facebook"></i>
+                      Continue with Facebook
+                    </button>
+                  </div>
+                </div>
+
+                <div class="redirectToLogin">
+                  <span>Already have an account? <span class="redirect" routerLink="/sign-in">Log In</span></span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!--/row-->
+    </div>
+    <!--/col-->
+  </div>
+</div>
