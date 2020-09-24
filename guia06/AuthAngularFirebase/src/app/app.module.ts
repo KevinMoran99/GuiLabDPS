@@ -17,6 +17,8 @@ import { environment } from '../environments/environment';
 
 import { UserService } from "./services/user.service";
 import { User } from './models/user';
+import { StudentComponent } from './components/student/student.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,14 +27,16 @@ import { User } from './models/user';
     SignInComponent,
     SignUpComponent,
     ForgotPasswordComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    StudentComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    FormsModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

@@ -99,6 +99,10 @@ export class UserService {
     return this.AuthLogin(new auth.GoogleAuthProvider());
   }
 
+  GithubAuth(){
+    return this.AuthLogin(new auth.GithubAuthProvider());
+  }
+
   // Lógica de autenticación para ejecutar cualquier proveedor de autenticación  
   AuthLogin(provider) {
     return this.afAuth.signInWithPopup(provider)

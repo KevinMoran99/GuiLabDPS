@@ -1,0 +1,115 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Logo</a>
+</nav>
+
+<!-- Sidebar navigation -->
+<div class="container-fluid">
+  <div class="row">
+
+    <nav class="col-md-2 d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="/dashboard">
+              <i class="fas fa-user"></i>User Profile
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active">
+              <i class="fas fa-prescription"></i>Student
+            </a>
+          </li>
+          <!-- Calling SignOut() Api from AuthService -->
+          <li class="nav-item">
+            <a class="nav-link" (click)="authService.SignOut()">
+              <i class="fas fa-sign-out-alt"></i>Log out
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <style>
+      .btn-space {
+        margin-right: 20px;
+      }
+
+    </style>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <div class="inner-adjust">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 mt-4">
+              <!-- mt-4 espacio en blanco vertical -->
+              <ul class="list-group">
+
+                <li *ngFor="let alumno of alumnoArray" class="list-group-item list-group-item-action"
+                  (click)="onEdit(alumno)" [class.active]="alumno.$key == alumnoService.selectedAlumno.$key">
+                  <span class="badge badge-primary">{{alumno.$key}}</span>
+                  - {{alumno.name}}
+                  - {{alumno.lastname}}
+                  - {{alumno.age}}
+                  - {{alumno.address}}
+                  - {{alumno.phone}}
+                  - {{alumno.email}}
+                </li>
+              </ul>
+              <div class="card">
+                <div class="card-body">
+                  <form #alumnoForm="ngForm">
+                    <div class="card-title">
+                      <h3>{{alumnoService.selectedAlumno.$key == null ? "Agregar Nuevo Alumno" : "Actualizar Alumno"}}
+                      </h3>
+                    </div>
+                    <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="alumnoService.selectedAlumno.$key">
+                    <div class="form-group">
+                      <input type="text" [(ngModel)]="alumnoService.selectedAlumno.name" placeholder="Nombre"
+                        class="form-control" name="name" #name="ngModel" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" [(ngModel)]="alumnoService.selectedAlumno.lastname" placeholder="Apellido"
+                        class="form-control" name="lastname" #lastname="ngModel" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="number" [(ngModel)]="alumnoService.selectedAlumno.age" placeholder="Edad"
+                        class="form-control" name="age" #age="ngModel" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" [(ngModel)]="alumnoService.selectedAlumno.address" placeholder="Direccion"
+                        class="form-control" name="address" #address="ngModel" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" [(ngModel)]="alumnoService.selectedAlumno.phone" placeholder="Telefono"
+                        name="phone" #phone="ngModel" pattern="^[267]{1}[0-9]{3}-{1}[0-9]{4}$" class="form-control"
+                        required>
+                    </div>
+                    <div class="form-group">
+                      <input type="email" [(ngModel)]="alumnoService.selectedAlumno.email" placeholder="Correo"
+                        class="form-control" name="email" #email="ngModel" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+                        required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-space" [disabled]="!alumnoForm.form.valid"
+                      (click)="onSubmit(alumnoForm)">
+                      Guardar
+                    </button>
+                    <button class="btn btn-secondary" type="reset" (click)="resetForm(alumnoForm)">
+                      <i class="fas fa-sync-alt"></i> Reset
+                    </button>
+                    <button *ngIf="alumnoService.selectedAlumno.$key != null" class="btn btn-danger float-right"
+                      (click)="onDelete(alumnoService.selectedAlumno.$key)" [disabled]="!alumnoForm.form.valid">
+                      Eliminar
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <!-- md-4 espacio en blanco vertical -->
+              <img width="300" alt="Angular Logo"
+                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
