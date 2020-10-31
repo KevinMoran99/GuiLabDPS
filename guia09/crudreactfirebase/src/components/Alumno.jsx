@@ -59,9 +59,9 @@ const Alumnos = () => {
       </div>
 
       <div className="col-md-8 p-2">
-        <div class="container">
+        <div className="container">
           <h2>Lista Alumnos</h2>
-          <table class="table table-hover">
+          <table className="table table-hover">
             <thead>
               <tr>
                 <th>Nombre</th>
